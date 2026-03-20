@@ -16,7 +16,11 @@ export default async function migrations(req, res) {
 
     if(req.method === 'GET') {
       const migrationPending = await pgMigrations(migrationConfig);
-      return res.status(200).json({ message: 'Has migrations pending', responseBody: migrationPending });
+      let message = 'Has no migrations pending';
+      if(migrationPending.length) {
+        message = 'Has migrations pending';
+      }
+      return res.status(200).json({ message, responseBody: migrationPending });
     }
 
 
