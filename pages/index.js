@@ -19,16 +19,6 @@ export default function Home() {
           <footer>consistência &gt; perfeição</footer>
         </section>
       </main>
-      <style jsx global>{`
-        html,
-        body {
-          margin: 0;
-          padding: 0;
-          height: 100%;
-          background: #070a12;
-        }
-      `}</style>
-
       <style jsx>{`
         main {
           height: 100vh;
