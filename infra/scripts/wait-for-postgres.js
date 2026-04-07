@@ -9,11 +9,11 @@ const waitForPostgres = () => {
       waitForPostgres();
       return;
     }
-    process.stdout.write("\nPostgreSQL is ready!\n");
+    process.stdout.write("\n✅🚀 PostgreSQL is ready!\n");
     
   });
 };
 
-process.stdout.write("\nConnecting to PostgreSQL");
+process.stdout.write("\n⌛👨‍💻 Connecting to PostgreSQL");
 waitForPostgres();
 

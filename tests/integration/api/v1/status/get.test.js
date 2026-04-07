@@ -1,3 +1,13 @@
+import orchestrator from "../orchestrator.js";
+// import { waitForAllServices } from "../orchestrator.js";
+
+// beforeAll(async () => {
+//   await waitForAllServices();
+// });
+beforeAll(async () => {
+  await orchestrator.waitForAllServices();
+});
+
 test('GET /api/v1/status returns 200', async () => {
   const response = await fetch('http://localhost:3000/api/v1/status');
   // console.log(response);
