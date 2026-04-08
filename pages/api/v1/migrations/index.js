@@ -1,44 +1,48 @@
-import pgMigrations from 'node-pg-migrate';
-import { join } from 'node:path';
-import database from 'infra/database';
+import pgMigrations from "node-pg-migrate";
+import { join } from "node:path";
+import database from "infra/database";
 
 export default async function migrations(req, res) {
   const dbClient = await database.getNewClient();
   try {
     const migrationConfig = {
       dbClient,
-      dryRun: req.method === 'GET', 
-      dir: join('infra', 'migrations'),
-      direction: 'up',
+      dryRun: req.method === "GET",
+      dir: join("infra", "migrations"),
+      direction: "up",
       verbose: true,
-      migrationsTable: 'pgmigrations',
+      migrationsTable: "pgmigrations",
     };
 
-    if(req.method === 'GET') {
+    if (req.method === "GET") {
       const migrationPending = await pgMigrations(migrationConfig);
-      let message = 'Has no migrations pending';
-      if(migrationPending.length) {
-        message = 'Has migrations pending';
+      let message = "Has no migrations pending";
+      if (migrationPending.length) {
+        message = "Has migrations pending";
       }
       return res.status(200).json({ message, responseBody: migrationPending });
     }
 
-
-    if(req.method === 'POST') {
+    if (req.method === "POST") {
       const migrationExecuted = await pgMigrations(migrationConfig);
 
-      if(migrationExecuted.length >= 1) {  
-        return res.status(201).json({ message: 'Migrations ran successfully', responseBody: migrationExecuted });
+      if (migrationExecuted.length >= 1) {
+        return res.status(201).json({
+          message: "Migrations ran successfully",
+          responseBody: migrationExecuted,
+        });
       }
-      
-      return res.status(200).json({ message: 'Migrations ran successfully', responseBody: migrationExecuted });
+
+      return res.status(200).json({
+        message: "Migrations ran successfully",
+        responseBody: migrationExecuted,
+      });
     }
 
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ error: "Method not allowed" });
   } catch (error) {
     return res.status(500).json({ error: error.message });
-  }finally{
+  } finally {
     dbClient.end();
   }
 }
-

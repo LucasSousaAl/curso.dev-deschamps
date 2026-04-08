@@ -43,13 +43,13 @@ export default function App() {
     const sobradoInvestindo = saldo;
 
     // Rendimento total bruto do investimento (sem pagar parcelas)
-    const rendimentoBruto =
-      totalCompra * (Math.pow(1 + taxa, numParcelas) - 1);
+    const rendimentoBruto = totalCompra * (Math.pow(1 + taxa, numParcelas) - 1);
 
     // Economia real: antecipando economizo `desconto`, mas perco o rendimento que teria
     // Economia líquida de antecipar = desconto - rendimento que teria no período
     const economiaNeta = desconto - rendimentoBruto;
-    const valeAntecipar = sobradoInvestindo < 0 ? true : desconto > rendimentoBruto;
+    const valeAntecipar =
+      sobradoInvestindo < 0 ? true : desconto > rendimentoBruto;
 
     // Qual taxa tornaria indiferente? (taxa de break-even)
     // Resolver: sum(parcela/(1+i)^t, t=1..n) = valorAntecipado
@@ -59,7 +59,8 @@ export default function App() {
     for (let iter = 0; iter < 100; iter++) {
       const mid = (low + high) / 2;
       let vp = 0;
-      for (let t = 1; t <= numParcelas; t++) vp += parcela / Math.pow(1 + mid, t);
+      for (let t = 1; t <= numParcelas; t++)
+        vp += parcela / Math.pow(1 + mid, t);
       if (vp > valorAntecipado) low = mid;
       else high = mid;
     }
@@ -388,7 +389,7 @@ export default function App() {
                           >
                             {h}
                           </th>
-                        )
+                        ),
                       )}
                     </tr>
                   </thead>
@@ -401,7 +402,9 @@ export default function App() {
                           background: i % 2 === 0 ? "transparent" : "#0d1525",
                         }}
                       >
-                        <td style={{ padding: "0.6rem 0.75rem", color: "#889" }}>
+                        <td
+                          style={{ padding: "0.6rem 0.75rem", color: "#889" }}
+                        >
                           {row.mes}
                         </td>
                         <td
@@ -702,8 +705,7 @@ function SummaryBox({ title, icon, items }) {
             justifyContent: "space-between",
             alignItems: "center",
             padding: "0.35rem 0",
-            borderBottom:
-              i < items.length - 1 ? "1px solid #151f30" : "none",
+            borderBottom: i < items.length - 1 ? "1px solid #151f30" : "none",
           }}
         >
           <span style={{ fontSize: "0.72rem", color: "#667" }}>
